@@ -6,26 +6,24 @@ spring:
 cloud:
   gateway:
     routes:
-      - id: LOGINAPI
-        uri: lb://REGISTRATIONAPI
+      - id: /api/signup
+        uri: http://localhost:8092
         predicates:
-          -Path=/api/auth/signup/**
+          -Path=/**
 
-      - id: LOGINAPI
-        uri: lb://LOGINAPI
+      - id: /api/login
+        uri: http://localhost:8091
         predicates:
-          - Path=/api/auth/login/**
+          - Path=/**
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-    instance:
-      hostname: localhost
-
-
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: env,health,metrics,info
 
 
 
